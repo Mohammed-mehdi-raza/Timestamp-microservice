@@ -16,30 +16,34 @@ const api = (req, res) => {
 
 const date = (req, res) => {
     let d = req.params.date;
-    if (d.indexOf('-') >= 0) {
-        let n = new Date(d);
-        if (n == "Invalid Date") {
-            res.json({ "error": "Invalid Date" })
+    if (typeof d == 'string') {
+        if (d.indexOf('-') >= 0) {
+            let n = new Date(d);
+            if (n == "Invalid Date") {
+                res.json({ "error": "Invalid Date" })
+            } else {
+                let utc = n.toUTCString();
+                let unix = n.valueOf();
+                res.json({
+                    "unix": unix,
+                    "utc": utc
+                });
+            }
         } else {
-            let utc = n.toUTCString();
-            let unix = n.valueOf();
-            res.json({
-                "unix": unix,
-                "utc": utc
-            });
+            let n = new Date(parseInt(d, 10));
+            if (n == "Invalid Date") {
+                res.json({ "error": "Invalid Date" })
+            } else {
+                let utc = n.toUTCString();
+                let unix = n.valueOf();
+                res.json({
+                    "unix": unix,
+                    "utc": utc
+                });
+            }
         }
     } else {
-        let n = new Date(parseInt(d, 10));
-        if (n == "Invalid Date") {
-            res.json({ "error": "Invalid Date" })
-        } else {
-            let utc = n.toUTCString();
-            let unix = n.valueOf();
-            res.json({
-                "unix": unix,
-                "utc": utc
-            });
-        }
+        res.json({ "error": "Invalid Date" });
     }
 }
 
