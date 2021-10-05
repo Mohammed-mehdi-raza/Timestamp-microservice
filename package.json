@@ -1,5 +1,6 @@
 {
     "name": "fcc-api-projects-boilerplate",
+    "author": "mohammed-mehdi-raza",
     "version": "0.0.1",
     "description": "An FCC Backend Challenge",
     "main": "server.js",
@@ -20,6 +21,5 @@
         "express",
         "freecodecamp"
     ],
-    "license": "MIT",
-    "author": ""
+    "license": "MIT"
 }
