@@ -1,3 +1,4 @@
+const { ENGINE_METHOD_PKEY_ASN1_METHS } = require("constants");
 const path = require("path");
 
 const index = (req, res) => {
@@ -17,8 +18,8 @@ const api = (req, res) => {
 const date = (req, res) => {
     let d = req.params.date;
     if (typeof d == 'string') {
-        if (d.indexOf('-') >= 0) {
-            let n = new Date(d);
+        if (/\d{5,}/.test(d)) {
+            let n = new Date(parseInt(d, 10));
             if (n == "Invalid Date") {
                 res.json({ "error": "Invalid Date" })
             } else {
@@ -30,7 +31,9 @@ const date = (req, res) => {
                 });
             }
         } else {
-            let n = new Date(parseInt(d, 10));
+            let s = new Date(d);
+            let m = s.getTimezoneOffset();
+            let n = new Date(s.getTime() + Math.abs(m * 60000));
             if (n == "Invalid Date") {
                 res.json({ "error": "Invalid Date" })
             } else {
